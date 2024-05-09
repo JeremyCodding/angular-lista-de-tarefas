@@ -24,8 +24,23 @@
   (outputAddListItem)="getInputAndAddItem($event)"
 />
 <main class="container">
+  @if(listItemsStage('pending').length) {
   <h2>Pendências:</h2>
-  <app-input-list-item [inputListItems]="getListItems()" />
+  <app-input-list-item
+    [inputListItems]="listItemsStage('pending')"
+    (outputUpdateItemCheckbox)="updateItemCheckbox($event)"
+    (outputUpdateItemText)="updateItemText($event)"
+    (outputDeleteItem)="outputDeleteItem($event)"
+  />
+  } @if (listItemsStage('completed').length) {
+  <h2>Concluídos:</h2>
+  <app-input-list-item
+    [inputListItems]="listItemsStage('completed')"
+    (outputUpdateItemCheckbox)="updateItemCheckbox($event)"
+    (outputUpdateItemText)="updateItemText($event)"
+    (outputDeleteItem)="outputDeleteItem($event)"
+  />
+  }
 </main>
 
 <footer>
