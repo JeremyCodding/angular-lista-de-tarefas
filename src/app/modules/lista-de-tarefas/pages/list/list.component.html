@@ -1,3 +1,4 @@
+@if(!getListItems().length) {
 <div class="container">
   <img
     src="assets/img/task-list-null.png"
@@ -5,21 +6,31 @@
     loading="eager"
   />
 
-  <button class="btn btn-primary">Crie uma lista de tarefas</button>
+  @if(addItem()){
+  <button class="btn btn-primary" (click)="addItem.set(false)">
+    Crie uma lista de tarefas
+  </button>
+  } @else {
+  <app-input-add-item
+    [inputListItems]="getListItems()"
+    (outputAddListItem)="getInputAndAddItem($event)"
+  />
 
-  <div>
-    <label for="inputValue" class="input-label-text">
-      <input
-        id="inputValue"
-        type="text"
-        placeholder="Adicione um novo item"
-        autofocus
-      />
-
-      <button
-        class="btn btn-primary-circle"
-        title="Adicionar um novo item"
-      ></button>
-    </label>
-  </div>
+  }
 </div>
+} @else {
+<app-input-add-item
+  [inputListItems]="getListItems()"
+  (outputAddListItem)="getInputAndAddItem($event)"
+/>
+<main class="container">
+  <h2>Pendências:</h2>
+  <app-input-list-item [inputListItems]="getListItems()" />
+</main>
+
+<footer>
+  <button class="btn btn-danger" (click)="deleteAllItems()">
+    Deletar todos os itens
+  </button>
+</footer>
+}
